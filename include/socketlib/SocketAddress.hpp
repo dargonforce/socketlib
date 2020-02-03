@@ -17,8 +17,8 @@ public:
     SocketAddress(std::string address, int port);
     ~SocketAddress();
 
-    int getPort();
-    std::string getAddress();
+    int getPort() const;
+    std::string getAddress() const;
 
     static struct ::sockaddr_in toStruct(const SocketAddress &addr);
     static SocketAddress fromStruct(const struct ::sockaddr_in &addr);
