@@ -25,8 +25,10 @@ public:
 
     static struct ::sockaddr_in toStruct(const SocketAddress &addr);
     static SocketAddress fromStruct(const struct ::sockaddr_in &addr);
+    friend bool operator==(const SocketAddress &lhs, const SocketAddress &rhs);
+    friend std::ostream &operator<<(std::ostream &os, const SocketAddress &addr);
 };
 
-static bool operator==(const SocketAddress &lhs, const SocketAddress &rhs);
+
 }
 #endif

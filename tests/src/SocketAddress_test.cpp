@@ -8,7 +8,7 @@ TEST(SocketAddress_test, BasicCreation) {
     const int port = 45;
     SocketAddress sockAddr(address, port);
     ASSERT_EQ(sockAddr.getPort(), port);
-    ASSERT_STREQ(sockAddr.getAddress(), address);
+    ASSERT_EQ(sockAddr.getAddress(), address);
 }
 
 TEST(SocketAddress_test, ToFromStruct) {

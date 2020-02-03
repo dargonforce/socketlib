@@ -1,6 +1,7 @@
 #include "socketlib/SocketAddress.hpp"
 
 #include <cstring>
+#include <iostream>
 
 namespace socketlib {
 SocketAddress::SocketAddress(std::string address, int port) : _address(std::move(address)), _port(port) {
@@ -32,7 +33,7 @@ struct ::sockaddr_in SocketAddress::toStruct(const SocketAddress &addr) {
 }
 
 SocketAddress SocketAddress::fromStruct(const struct ::sockaddr_in &addr) {
-    const int port = addr.sin_port;
+    const int port = ntohs(addr.sin_port);
     char ip[INET_ADDRSTRLEN];
     inet_ntop(addr.sin_family, std::addressof(addr.sin_addr), ip, INET_ADDRSTRLEN);
     const std::string address(ip);
@@ -40,7 +41,10 @@ SocketAddress SocketAddress::fromStruct(const struct ::sockaddr_in &addr) {
 }
 
 bool operator==(const SocketAddress &lhs, const SocketAddress &rhs) {
-    
-    return lhs.getPort() == rhs.getPort() && lhs.getAddress() == rhs.getAddress();
+    return lhs._port == rhs._port && lhs._address == rhs._address;
+}
+
+std::ostream &operator<<(std::ostream &os, const SocketAddress &addr) {
+    return os << addr._address << ":" << addr._port;
 }
 }
