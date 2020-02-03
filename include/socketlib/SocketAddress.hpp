@@ -15,7 +15,10 @@ private:
 
 public:
     SocketAddress(std::string address, int port);
+    SocketAddress(const SocketAddress &rhs);
     ~SocketAddress();
+
+    SocketAddress &operator=(const SocketAddress &rhs);
 
     int getPort() const;
     std::string getAddress() const;
@@ -23,5 +26,7 @@ public:
     static struct ::sockaddr_in toStruct(const SocketAddress &addr);
     static SocketAddress fromStruct(const struct ::sockaddr_in &addr);
 };
+
+static bool operator==(const SocketAddress &lhs, const SocketAddress &rhs);
 }
 #endif

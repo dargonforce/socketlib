@@ -7,7 +7,11 @@ SocketAddress::SocketAddress(std::string address, int port) : _address(std::move
     // stub
 }
 
+SocketAddress::SocketAddress(const SocketAddress &rhs) = default;
+
 SocketAddress::~SocketAddress() = default;
+
+SocketAddress &SocketAddress::operator=(const SocketAddress &rhs) = default;
 
 int SocketAddress::getPort() const {
     return _port;
@@ -33,5 +37,10 @@ SocketAddress SocketAddress::fromStruct(const struct ::sockaddr_in &addr) {
     inet_ntop(addr.sin_family, std::addressof(addr.sin_addr), ip, INET_ADDRSTRLEN);
     const std::string address(ip);
     return SocketAddress(address, port);
+}
+
+bool operator==(const SocketAddress &lhs, const SocketAddress &rhs) {
+    
+    return lhs.getPort() == rhs.getPort() && lhs.getAddress() == rhs.getAddress();
 }
 }
